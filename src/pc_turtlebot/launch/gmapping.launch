@@ -1,0 +1,31 @@
+<launch>
+	<!-- <node
+		pkg = "pointcloud_to_laserscan"
+		type = "pointcloud_to_laserscan_node"
+		name = "pointcloud_to_laserscan_node"	
+		args = "cloudin:=/velodyne_points"
+		output = "screen"
+	/> -->
+
+
+	<node
+		pkg = "tf"
+		type = "static_transform_publisher"
+		name = "static_transform_publisher_velodyne"
+		args = "0 0 0 0 0 0 base_link velodyne 100"
+		output = "screen"
+
+	/>	
+
+  <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch"/>
+	<!-- <node
+		pkg = "gmapping"
+		type = "slam_gmapping"
+		name = "slam_gmapping"
+		output = "screen">
+		<param name="map_update_interval" value="0.1"/>
+
+
+	</node> -->
+
+</launch>

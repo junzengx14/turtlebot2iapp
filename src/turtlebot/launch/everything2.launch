@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<launch>
+  <include file="$(find turtlebot2i_bringup)/launch/minimal.launch"/>
+
+  <include file="$(find turtlebot2i_bringup)/launch/arms/phantomx_pincher_arm.launch"/>
+
+  <include file="$(find turtlebot)/launch/rs_rgbd.launch"/>
+
+  <include file="$(find turtlebot)/launch/voxed_grid_filtering.launch"/>
+
+  <include file="$(find turtlebot2i_bringup)/launch/dual_3dsensor.launch"/>
+  <arg name="3d_sensor" default="$(env TURTLEBOT_3D_SENSOR)" />
+
+  <include file="$(find turtlebot2i_arm_director)/launch/named_pose_director.launch">
+    <arg name="load_moveit" value="true"/>
+  </include>
+
+  <arg name="new_rtabmap" default="true"/>
+  <arg name="localization" default="false"/>
+  <arg name="rtabmapviz" default="false"/>
+  <arg name="rviz" default="false"/>
+
+<include if="$(arg rviz)" file="$(find turtlebot2i_bringup)/launch/rviz.launch"/>
+
+
+	<!-- <include file="$(find turtlebot)/launch/rtabmap.launch">
+    <arg name="localization" value="$(arg localization)"/>
+    <arg name="rtabmapviz" value="$(arg rtabmapviz)"/>
+  </include> -->
+
+  <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch"/>
+
+  <node
+		pkg = "pointcloud_to_laserscan"
+		type = "pointcloud_to_laserscan_node"
+		name = "pointcloud_to_laserscan_node"	
+		args = "cloudin:=/velodyne_points"
+		output = "screen"
+	/>
+
+<node
+    pkg = "tf"
+    type = "static_transform_publisher"
+    name = "static_transform_publisher_vel"
+    args = "0 0 .445 0 0 0 base_link velodyne 100"
+    output = "screen"
+
+  /> 
+	<node
+		pkg = "pointcloud_to_laserscan"
+		type = "pointcloud_to_laserscan_node"
+		name = "pointcloud_to_laserscan_node2"	
+		args = "cloudin:=/camera/depth_registered/points"
+		output = "screen"
+	/>
+  <!-- <arg name="3d_sensor2" default="$(env TURTLEBOT_3D_SENSOR2)" /> -->
+
+  <!-- <include file="$(find astra_launch)/launch/astra.launch"/> -->
+
+
+<!-- Map server -->
+  <arg name="map_file" default="$(env TURTLEBOT_MAP_FILE)"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+
+  <!-- AMCL -->
+  <!-- <arg name="custom_amcl_launch_file" default="$(find turtlebot_navigation)/launch/includes/amcl/$(arg 3d_sensor)_amcl.launch.xml"/> -->
+ <!--  <arg name="initial_pose_x" default="0.0"/>  --><!-- Use 17.0 for willow's map in simulation -->
+  <!-- <arg name="initial_pose_y" default="0.0"/> --> <!-- Use 17.0 for willow's map in simulation -->
+<!--   <arg name="initial_pose_a" default="0.0"/> -->
+  <!-- <include file="$(arg custom_amcl_launch_file)">
+    <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>
+    <arg name="initial_pose_y" value="$(arg initial_pose_y)"/>
+    <arg name="initial_pose_a" value="$(arg initial_pose_a)"/>
+  </include> -->
+
+  <!-- Move base -->
+  <arg name="custom_param_file" default="$(find turtlebot_navigation)/param/$(arg 3d_sensor)_costmap_params.yaml"/>
+  <include file="$(find turtlebot_navigation)/launch/includes/move_base.launch.xml">
+    <arg name="custom_param_file" value="$(arg custom_param_file)"/>
+	</include>
+
+  <include file="$(find rrt_exploration)/launch/single.launch">
+  </include>
+
+<!-- 
+	<arg name="marker_size" default="15" />
+		<arg name="max_new_marker_error" default="0.08" />
+		<arg name="max_track_error" default="0.2" />
+
+		<arg name="cam_image_topic" default="/camera/depth_registered/points" />
+		<arg name="cam_info_topic" default="/camera/rgb/camera_info" />		
+		<arg name="output_frame" default="/base_link" />
+
+	<node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkers" respawn="false" output="screen" args="$(arg marker_size) $(arg max_new_marker_error) $(arg max_track_error) $(arg cam_image_topic) $(arg cam_info_topic) $(arg output_frame)" /> -->
+<!-- 
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find turtlebot_rviz_launchers)/rviz/navigation.rviz"/> -->
+
+	<node
+		pkg = "gmapping"
+		type = "slam_gmapping"
+		name = "slam_gmapping"
+		output = "screen">
+		<param name="map_update_interval" value="0.1"/>
+	</node>
+
+	<!-- <node
+		pkg = "rviz"
+		type = "rviz"
+		name = "rviz"
+
+	/>	 -->
+</launch>

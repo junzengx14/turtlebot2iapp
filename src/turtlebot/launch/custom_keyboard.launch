@@ -1,0 +1,19 @@
+<launch>
+	<node
+		pkg = "joy"
+		type = "joy_node"
+		name = "joystick"	
+		>
+	<param name="autorepeat_rate" value="80"/>
+	</node>
+
+
+	<node
+		pkg = "turtlebot"
+		type = "custom_key.py"
+		name = "teleop_key"
+		output = "screen"
+
+	/>
+
+</launch>

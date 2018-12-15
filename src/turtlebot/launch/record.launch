@@ -1,0 +1,20 @@
+<launch>
+
+    <node 
+		pkg="turtlebot" 
+		type="readodom.py" 
+		name="readodom"
+        output = "screen">
+    </node>
+
+
+    <node
+		pkg = "rosbag"
+		type = "record"
+		name = "recordbag"
+        output = "screen"
+        args = "record -O /home/turtlebot/Documents/everybag.bag /odom /tf /velodyne_points /vox_camera_sr300/depth/points /vox_camera/depth/points /scan /map /joint_states /target_pose /gripper_pose /terminal_state /optimal_state_trajectory /object_location_for_mpc /joint_angles /virtualTB_pos /state_update /object_grabbed /cmd_vel_mux/input/teleop /finalgoal"
+	/>
+</launch>
+
+

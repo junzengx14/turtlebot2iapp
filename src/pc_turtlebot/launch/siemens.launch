@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+  <include file="$(find pc_turtlebot)/launch/minimal.launch"/>
+
+  <include file="$(find pc_turtlebot)/launch/arms/phantomx_pincher_arm.launch"/>
+
+</launch>

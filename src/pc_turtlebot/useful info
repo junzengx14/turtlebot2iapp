@@ -1,0 +1,26 @@
+
+fix the missing wheelbase link transform
+http://library.isr.ist.utl.pt/docs/roswiki/navigation(2f)Tutorials(2f)RobotSetup(2f)Odom.html
+
+moving the arm
+http://docs.ros.org/kinetic/api/moveit_tutorials/html/doc/move_group_python_interface/move_group_python_interface_tutorial.html
+
+
+#topic for gripper
+#STAY WITHIN -2.2 to 0 or gripper could break
+pub_gripper = rospy.Publisher('gripper_joint/command',Float64, queue_size = 1)
+
+# Get x,y,z state of base
+odom_sub = rospy.Subscriber('/odom', Odometry, callback_function_state)
+
+
+# get map data
+map_sub = rospy.Subscriber('map', OccupancyGrid, callback_function_map)
+
+
+# Search for object to pick up
+cam_sub = rospy.Subscriber('/vox_camera_sr300/depth/points', PointCloud2, callback_function_cam, queue_size = 1)
+
+
+# Get current joint angles of arm
+jointState_sub = rospy.Subscriber('/joint_states', JointState, callback_function_joint)

@@ -1,0 +1,19 @@
+<launch>
+	<node
+		pkg = "keyboard"
+		type = "keyboard"
+		name = "keyboard"
+		respawn = "true"	
+		>
+	</node>
+
+
+	<node
+		pkg = "turtlebot"
+		type = "keyboard_controller.py"
+		name = "teleop_key"
+		output = "screen"
+
+	/>
+
+</launch>

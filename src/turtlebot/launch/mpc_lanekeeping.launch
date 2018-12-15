@@ -1,0 +1,10 @@
+<launch>
+  <rosparam command ="load" file="$(find turtlebot)/launch/mpc_parameters.yaml"/>
+  <node pkg="turtlebot" type="MPC_Lane_Keeping.jl" name="Lane_Keeping_MPC" output="screen">
+  </node>
+
+
+	<!-- <node pkg="turtlebot" type="openlooparm.py" name="openlooparm" output="screen">
+  </node> -->
+
+</launch>

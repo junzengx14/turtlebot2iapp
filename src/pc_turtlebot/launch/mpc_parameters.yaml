@@ -1,0 +1,26 @@
+# Number of states / Number of inputs
+numStates: 3
+numInputs: 2
+
+numStepsToLookAhead: 2
+numMovingAveragePoints: 3
+
+# Cost matrices
+Q: [[20, 0, 0] , [0, 20, 0], [0, 0, 10]]
+R: [[1, 0], [0, 0.1]]
+
+
+#Box constraints on states
+x_min: -10
+x_max: 10
+y_min: -10
+y_max: 10
+
+# Box constraints on input, A*u <= B
+v_max: 0.12
+v_min: -0.12
+steer_min: -0.7
+steer_max: 0.7
+
+reference_velocity: .1
+loop_rate: 10

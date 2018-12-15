@@ -1,0 +1,17 @@
+<launch>
+
+    <node 
+		pkg="turtlebot" 
+		type="Prescan.py" 
+		name="Prescan">
+    </node>
+
+
+    <node
+		pkg = "turtlesim"
+		type = "turtle_teleop_key"
+		name = "teleop_key"
+		required = "true"
+        output = "screen"
+	/>
+</launch>

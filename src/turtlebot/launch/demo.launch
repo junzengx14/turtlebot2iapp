@@ -1,0 +1,11 @@
+<launch>
+
+	<arg name="sim" default="false" />
+	<include file="$(find phantomx_pincher_arm_moveit_config)/launch/phantomx_pincher_arm_moveit.launch">
+		<arg name="sim" value="$(arg sim)"/>
+	</include>
+	
+  <node name="move_group_python_interface_tutorial" pkg="turtlebot" type="testIK.py" respawn="false" output="screen">
+  </node>
+
+</launch>

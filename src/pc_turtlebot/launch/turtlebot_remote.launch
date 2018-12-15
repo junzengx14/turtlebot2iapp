@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+
+	<group>
+	 <machine name="turtlebot" address="10.42.0.1" timeout="20.0" env-loader="/home/turtlebot/turtlebot2i/envloader_turtlebot.sh"/>
+
+	  <include file="/home/turtlebot/turtlebot2i/src/turtlebot/launch/everything.launch">
+	  	<arg name="machine" value="turtlebot" />
+	  </include>
+
+	</group>
+</launch>

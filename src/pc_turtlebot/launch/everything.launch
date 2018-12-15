@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<launch>
+  <include file="$(find pc_turtlebot)/launch/minimal.launch"/>
+
+  <include file="$(find pc_turtlebot)/launch/arms/phantomx_pincher_arm.launch"/>
+
+  <!-- <include file="$(find turtlebot)/launch/rs_rgbd.launch"/> -->
+
+  <!-- <include file="$(find turtlebot)/launch/voxed_grid_filtering.launch"/> -->
+
+  <include file="$(find pc_turtlebot)/launch/dual_3dsensor.launch"/>
+  <arg name="3d_sensor" default="$(env TURTLEBOT_3D_SENSOR)" />
+
+  <!-- <include file="$(find turtlebot2i_arm_director)/launch/named_pose_director.launch">
+    <arg name="load_moveit" value="true"/>
+  </include>
+ -->
+  <arg name="new_rtabmap" default="true"/>
+  <arg name="localization" default="false"/>
+  <arg name="rtabmapviz" default="false"/>
+  <arg name="rviz" default="true"/>
+
+	<include if="$(arg rviz)" file="$(find pc_turtlebot)/launch/rviz.launch"/>
+
+	<!-- <include file="$(find turtlebot)/launch/rtabmap.launch">
+    <arg name="localization" value="$(arg localization)"/>
+    <arg name="rtabmapviz" value="$(arg rtabmapviz)"/>
+  </include> -->
+
+  <!-- <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch"/> -->
+
+  <!-- <node
+		pkg = "rosbag"
+		type = "play"
+		name = "rosplay"	
+		args = "-r 1 /home/tony/6everybag.bag"
+		output = "screen"
+	/> -->
+
+
+	<!-- <node
+		pkg = "pointcloud_to_laserscan"
+		type = "pointcloud_to_laserscan_node"
+		name = "pointcloud_to_laserscan_node2"	
+		args = "cloudin:=/camera/depth_registered/points"
+		output = "screen"
+	/> -->
+  <!-- <arg name="3d_sensor2" default="$(env TURTLEBOT_3D_SENSOR2)" /> -->
+
+  <!-- <include file="$(find astra_launch)/launch/astra.launch"/> -->
+
+
+	<!-- <node
+		pkg = "gmapping"
+		type = "slam_gmapping"
+		name = "slam_gmapping"
+		output = "screen">
+		<param name="map_update_interval" value="0.1"/>
+	</node> -->
+
+	<!-- <node
+		pkg = "rviz"
+		type = "rviz"
+		name = "rviz"
+
+	/>	 -->
+</launch>
