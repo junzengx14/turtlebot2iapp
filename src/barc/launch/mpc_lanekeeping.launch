@@ -1,0 +1,6 @@
+<launch>
+  <rosparam command ="load" file="$(find barc)/launch/mpc_parameters.yaml"/>
+  <node pkg="barc" type="MPC_Lane_Keeping.jl" name="Lane_Keeping_MPC" output="screen">
+  </node>
+
+</launch>
