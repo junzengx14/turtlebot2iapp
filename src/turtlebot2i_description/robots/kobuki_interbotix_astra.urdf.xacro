@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+    - Base      : kobuki
+    - Stacks    : interbotix
+    - 3d Sensor : astra
+
+    - arm : TODO: supported arms?
+-->    
+<robot name="turtlebot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find turtlebot2i_description)/urdf/turtlebot_library.urdf.xacro" />
+  <kobuki/>
+
+  <stack_interbotix parent="base_link"/>
+  
+  <sensor_astra parent="base_link"/>
+
+  <sensor_sr300 parent="base_link"/>
+
+  <phantomx_pincher_arm parent="base_link" color="Red" gripper_color="Red">
+    <origin xyz="0.145 0.0 0.124"/>
+  </phantomx_pincher_arm>
+
+  <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
+  <VLP-16 parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="440" gpu="false">
+    <origin xyz="0 0 0.4578" rpy="0 0 0" />
+    <!-- <origin xyz="0 0 0.4" rpy="0 0 0" /> -->
+  </VLP-16>
+</robot>
